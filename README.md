@@ -238,6 +238,24 @@ let user = new Model({any: 'default', fields: 'you want'}, '/route-to-fetch-user
 ```
 
 To send request:
+
 **fetch many records**
+```js
+//simplest
+user.fetch()
+	.then(response => { /* do your thing */ })
+	.catch(error => { /* handle it */ });
+
+//with additional parameters
+user.fetch({sortby: 'id', per_page: 20}, (response) => {
+    // this is an optional callback to transform response
+    // do your thing
+}, (request) => {
+    // this is an optional callback to transform request
+    // do your thing
+})
+.then(response => { /* do your thing */ })
+.catch(error => { /* handle it */ });
+```
 
 To simplify further you can extend the **_Model.js_** class and add any additional methods can be useful for your needs.
