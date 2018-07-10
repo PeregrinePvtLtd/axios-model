@@ -66,7 +66,7 @@ using cdn:
 ```
 
 ## Features
-axios-model (_Model.js_) provides helper methods for sending **get**, **post**, **patch** and **delete** requests. 
+axios-model (**_Model.js_**) provides helper methods for sending **get**, **post**, **patch** and **delete** requests. 
 
 ```import``` or ```require``` the following **_Model.js_** class to use it in your project. 
 
@@ -235,12 +235,15 @@ export default class Model {
     }
 }
 ```
-Now you can initialise an object
+### Send HTTP request
+
+Before starting to send http requests you need initialise a new model object
+
 ```js
+import Model from './Model';
+
 let user = new Model({any: 'default', fields: 'you want'}, '/route-to-fetch-users', {any: 'additional url params'});
 ```
-
-### Send HTTP request
 
 #### Fetch Many Records
 ```js
@@ -263,8 +266,9 @@ user.fetch({sortby: 'id', per_page: 20}, (response) => {
     user.list = response.data.data
 }).catch(error => { /* handle it */ });
 ```
-You can use the model **list** property to save the data array from the response
-_TransformResponseCallback_ and _TransformRequestCallback_ methods can be used with all http methods.
+You can use the model **list** property to save the data array from the response.
+
+**_TransformResponseCallback_** and **_TransformRequestCallback_** methods can be used with all http methods.
 
 #### Get Single Record
 ```js
@@ -328,11 +332,13 @@ export default class User extends Model {
     }
 }
 ```
-Now you can initialise an object with less arguments
+Now you can initialise a user object which required less arguments.
 ```js
+import User from './User';
+
 let user = new User();
 ```
-As shown in the **_User.js_** above, some default fields can be set when initialising. This can be useful when using with a frontend library like [Vuejs](https://vuejs.org/). You can use them like ``` v-model="user.name" ```. These properties can be accessed directly from the object like ``` user.name, user.email ```
+As shown in the **_User.js_** above, some default fields can be set when initialising. This can be useful when using with a frontend library like [Vuejs](https://vuejs.org/). You can use them like ``` v-model="user.name" ```. These properties can be accessed directly from the object like ``` user.name, user.email ```.
 
 #### Additional Methods
 You can define any additional methods you want in your extended class.
@@ -375,6 +381,8 @@ export default class Photo extends Model {
 ```
 Now to initialise and send request, it would look something like the following.
 ```js
+import Photo from './Photo';
+
 let photo = new Photo();
 photo.id = 10;
 photo.upload(formData).then(response => {
