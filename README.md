@@ -250,15 +250,45 @@ user.fetch().then(response => {
 
 //with additional parameters
 user.fetch({sortby: 'id', per_page: 20}, (response) => {
-    // this is an optional callback to transform response
+    // this is an optional callback to transform response (TransformResponseCallback) 
     // do your thing
 }, (request) => {
-    // this is an optional callback to transform request
+    // this is an optional callback to transform request (TransformRequestCallback)
     // do your thing
 }).then(response => { 
     /* do your thing */
     user.list = response.data.data
 }).catch(error => { /* handle it */ });
 ```
+_TransformResponseCallback_ and _TransformRequestCallback_ methods can be used with all http methods.
 
+**get single item**
+```js
+user.get(userId, params).then(response => {
+    // use the item property to store single item
+    user.item = response.data;
+}).catch(error => { /* handle it */ });
+```
+
+**create new item**
+```js
+user.create({name: 'Jane Doe', email: 'janedoe@example.com', password: 'password'}).then(response => {
+    user.item = response.data;
+    // do any other stuff you want
+}).catch(error => { /* handle it */ });
+```
+
+**update existing item**
+```js
+user.update(userId, {name: 'Jane Doe The 3rd', email: 'janedoe3rd@example.com'}).then(response => {
+    // do stuff
+}).catch(error => { /* handle it */ });
+```
+
+**delete existing item**
+```js
+user.destroy(userId).then(response => {
+    // do stuff
+}).catch(error => { /* handle it */ });
+```
 To simplify further you can extend the **_Model.js_** class and add any additional methods can be useful for your needs.
