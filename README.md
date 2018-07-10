@@ -1,13 +1,13 @@
 # axios-model
-A model class with helper functions for axios js
+A model class with helper functions for [axios](https://github.com/axios/axios) js.
 
 ## Introduction
-It's just a javascript class to help simplify http requests sent using [axios](https://github.com/axios/axios)
+It's just a javascript class to help simplify http requests sent using [axios](https://github.com/axios/axios).
 
 ## Requirements and Assumption
 This library assumes your backend responds with data that is in json format.
 
-Something like the following
+Something like the following.
 ```js
 //single item (sample laravel backend response)
 {
@@ -50,28 +50,29 @@ Something like the following
 }
 ```
 
-You will need to install [axios](https://github.com/axios/axios) in order to use the **_Model.js_** class. You can install it
+You will need to install [axios](https://github.com/axios/axios) in order to use the **_Model.js_** class. You can install it in the following ways.
 
 using npm:
 ```
 npm install axios
 ```
+
 using bower:
 ```
 bower install axios
 ```
+
 using cdn:
 ```html
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 ```
 
 ## Features
-axios-model (**_Model.js_**) provides helper methods for sending **get**, **post**, **patch** and **delete** requests. 
+The axios-model (**_Model.js_**) provides helper methods for sending **get**, **post**, **patch** and **delete** requests. 
 
-```import``` or ```require``` the following **_Model.js_** class to use it in your project. 
+You can ```import``` or ```require``` the following **_Model.js_** class to use it in your project. 
 
 Examples are showns as we go forward.
-
 ```js
 // Model.js
 
@@ -235,10 +236,10 @@ export default class Model {
     }
 }
 ```
+
 ### Send HTTP request
 
 Before starting to send http requests you need initialise a new model object
-
 ```js
 import Model from './Model';
 
@@ -266,6 +267,7 @@ user.fetch({sortby: 'id', per_page: 20}, (response) => {
     user.list = response.data.data
 }).catch(error => { /* handle it */ });
 ```
+
 You can use the model **list** property to save the data array from the response.
 
 **_TransformResponseCallback_** and **_TransformRequestCallback_** methods can be used with all http methods.
@@ -277,6 +279,7 @@ user.get(userId, params).then(response => {
     user.item = response.data;
 }).catch(error => { /* handle it */ });
 ```
+
 You can use the model **item** property to save the single item from the response
 
 #### Create New Record
@@ -286,6 +289,7 @@ user.create({name: 'Jane Doe', email: 'janedoe@example.com', password: 'password
     // do any other stuff you want
 }).catch(error => { /* handle it */ });
 ```
+Pass the payload ``` {name: 'Jane Doe', email: 'janedoe@example.com', password: 'password'} ``` as an object to create method to store new record.
 
 #### Update Existing Record
 ```js
@@ -294,12 +298,17 @@ user.update(userId, {name: 'Jane Doe The 3rd', email: 'janedoe3rd@example.com'})
 }).catch(error => { /* handle it */ });
 ```
 
+Pass the record id ``` userId ``` along with fields to update ``` {name: 'Jane Doe The 3rd', email: 'janedoe3rd@example.com'} ``` to update method to change an existing record.
+
 #### Delete Existing Record
 ```js
 user.destroy(userId).then(response => {
     // do stuff
 }).catch(error => { /* handle it */ });
 ```
+
+Pass the record id ``` userId ```  to destroy method to delete an existing record. 
+
 ### Extending and Additional HTTP Methods
 To simplify further you can **extend** the **_Model.js_** class and add any **additional methods** that can be useful for your needs.
 
@@ -332,12 +341,14 @@ export default class User extends Model {
     }
 }
 ```
+
 Now you can initialise a user object which required less arguments.
 ```js
 import User from './User';
 
 let user = new User();
 ```
+
 As shown in the **_User.js_** above, some default fields can be set when initialising. This can be useful when using with a frontend library like [Vuejs](https://vuejs.org/). You can use them like ``` v-model="user.name" ```. These properties can be accessed directly from the object like ``` user.name, user.email ```.
 
 #### Additional Methods
@@ -379,6 +390,7 @@ export default class Photo extends Model {
     }
 }
 ```
+
 Now to initialise and send request, it would look something like the following.
 ```js
 import Photo from './Photo';
@@ -389,6 +401,7 @@ photo.upload(formData).then(response => {
     // do stuff here
 }).catch(error => { /* handle it */});
 ```
+
 For example this method will send a **post** request to ``` http://someapp/photos/10/upload ``` and response might look something like the following.
 ```js
 {
@@ -402,4 +415,5 @@ For example this method will send a **post** request to ``` http://someapp/photo
   "thumbnail_link": "http://someapp/photos/10/my-first-photo-thumbnail.png",
 }
 ```
+
 You can define additional methods to your heart's content.
