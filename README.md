@@ -4,10 +4,71 @@ A model class with helper functions for axios js
 ## Introduction
 It's just a javascript class to help simplify http requests sent using [axios](https://github.com/axios/axios)
 
+## Requirements and Assumption
+You will need to install [axios](https://github.com/axios/axios) in order to use the **_Model.js_** class. You can install it
+
+using npm:
+```
+npm install axios
+```
+using bower:
+```
+bower install axios
+```
+using cdn:
+```html
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+```
+
+This library assumes your backend responds with data that is in json format.
+
+Something like the following
+```js
+//single item (sample laravel backend response)
+{
+  "id": 1,
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "created_at": "2018-07-09 10:02:14",
+  "updated_at": "2018-07-09 10:02:14"
+}
+
+//collection (sample laravel backend response)
+{
+  "current_page": 1,
+  "data": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "created_at": "2018-07-09 10:02:14",
+      "updated_at": "2018-07-09 10:02:14"
+    },
+    {
+      "id": 2,
+      "name": "Gladyce Kuhn",
+      "email": "xryan@example.com",
+      "created_at": "2018-07-09 10:02:14",
+      "updated_at": "2018-07-09 10:02:14"
+    }
+  ],
+  "first_page_url": "http://someapp/users?page=1",
+  "from": 1,
+  "last_page": 4,
+  "last_page_url": "http://someapp/users?page=4&per_page=2",
+  "next_page_url": "http://someapp/users?page=2&per_page=2",
+  "path": "http://someapp/users",
+  "per_page": 2,
+  "prev_page_url": null,
+  "to": 2,
+  "total": 8
+}
+```
+
 ## Features
 axios-model (_Model.js_) provides helper methods for sending **get**, **post**, **patch** and **delete** requests. 
 
-The Following is the _Model.js_ class. Examples are showns as we go forward.
+The Following is the **_Model.js_** class. Examples are showns as we go forward.
 
 ### Model.js
 ```js
@@ -176,4 +237,7 @@ Now you can initialise an object
 let user = new Model({any: 'default', fields: 'you want'}, '/route-to-fetch-users', {any: 'additional url params'});
 ```
 
-Additional methods can be added by extending the _Model.js_ class.
+To send request:
+**fetch many records**
+
+To simplify further you can extend the **_Model.js_** class and add any additional methods can be useful for your needs.
