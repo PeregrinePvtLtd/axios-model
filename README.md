@@ -243,8 +243,12 @@ To send request:
 ```js
 //simplest
 user.fetch()
-	.then(response => { /* do your thing */ })
-	.catch(error => { /* handle it */ });
+    .then(response => {
+        // use the list property to store the response data
+	user.list = response.data.data // yeah i know :|
+        /* do your thing */ 
+    })
+    .catch(error => { /* handle it */ });
 
 //with additional parameters
 user.fetch({sortby: 'id', per_page: 20}, (response) => {
