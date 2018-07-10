@@ -5,21 +5,6 @@ A model class with helper functions for axios js
 It's just a javascript class to help simplify http requests sent using [axios](https://github.com/axios/axios)
 
 ## Requirements and Assumption
-You will need to install [axios](https://github.com/axios/axios) in order to use the **_Model.js_** class. You can install it
-
-using npm:
-```
-npm install axios
-```
-using bower:
-```
-bower install axios
-```
-using cdn:
-```html
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-```
-
 This library assumes your backend responds with data that is in json format.
 
 Something like the following
@@ -65,13 +50,31 @@ Something like the following
 }
 ```
 
+You will need to install [axios](https://github.com/axios/axios) in order to use the **_Model.js_** class. You can install it
+
+using npm:
+```
+npm install axios
+```
+using bower:
+```
+bower install axios
+```
+using cdn:
+```html
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+```
+
 ## Features
 axios-model (_Model.js_) provides helper methods for sending **get**, **post**, **patch** and **delete** requests. 
 
-The Following is the **_Model.js_** class. Examples are showns as we go forward.
+```import``` or ```require``` the following **_Model.js_** class to use it in your project. 
 
-### Model.js
+Examples are showns as we go forward.
+
 ```js
+// Model.js
+
 import axios from 'axios';
 
 export default class Model {
@@ -237,15 +240,15 @@ Now you can initialise an object
 let user = new Model({any: 'default', fields: 'you want'}, '/route-to-fetch-users', {any: 'additional url params'});
 ```
 
-To send request:
+### Send HTTP request
 
-**fetch many records**
+#### Fetch Many Records
 ```js
 //simplest
 user.fetch().then(response => {
     // use the list property to store the response data
     user.list = response.data.data // yeah i know :|
-    /* do your thing */ 
+    // do your thing 
 }).catch(error => { /* handle it */ });
 
 //with additional parameters
@@ -256,21 +259,23 @@ user.fetch({sortby: 'id', per_page: 20}, (response) => {
     // this is an optional callback to transform request (TransformRequestCallback)
     // do your thing
 }).then(response => { 
-    /* do your thing */
+    // do your thing
     user.list = response.data.data
 }).catch(error => { /* handle it */ });
 ```
+You can use the model **list** property to save the data array from the response
 _TransformResponseCallback_ and _TransformRequestCallback_ methods can be used with all http methods.
 
-**get single item**
+#### Get Single Record
 ```js
 user.get(userId, params).then(response => {
     // use the item property to store single item
     user.item = response.data;
 }).catch(error => { /* handle it */ });
 ```
+You can use the model **item** property to save the single item from the response
 
-**create new item**
+#### Create New Record
 ```js
 user.create({name: 'Jane Doe', email: 'janedoe@example.com', password: 'password'}).then(response => {
     user.item = response.data;
@@ -278,17 +283,115 @@ user.create({name: 'Jane Doe', email: 'janedoe@example.com', password: 'password
 }).catch(error => { /* handle it */ });
 ```
 
-**update existing item**
+#### Update Existing Record
 ```js
 user.update(userId, {name: 'Jane Doe The 3rd', email: 'janedoe3rd@example.com'}).then(response => {
     // do stuff
 }).catch(error => { /* handle it */ });
 ```
 
-**delete existing item**
+#### Delete Existing Record
 ```js
 user.destroy(userId).then(response => {
     // do stuff
 }).catch(error => { /* handle it */ });
 ```
-To simplify further you can extend the **_Model.js_** class and add any additional methods can be useful for your needs.
+### Extending and Additional HTTP Methods
+To simplify further you can **extend** the **_Model.js_** class and add any **additional methods** that can be useful for your needs.
+
+#### Extend
+It is easy.
+```js
+// User.js
+
+import Model from "./Model";
+
+export default class User extends Model {
+
+    /**
+     * Create a new user model
+     * @param {object} data model data
+     * @param {object} params additional url parameters
+     * @param {string} url request url
+     */
+    constructor(data = null, params = null, url = '/users') {
+        if (data == null) {
+            data = {
+                name: null,
+                email: null,
+                password: null,
+                password_confirmation: null
+            };
+        }
+
+        super(data, url, params);
+    }
+}
+```
+Now you can initialise an object with less arguments
+```js
+let user = new User();
+```
+As shown in the **_User.js_** above, some default fields can be set when initialising. This can be useful when using with a frontend library like [Vuejs](https://vuejs.org/). You can use them like ``` v-model="user.name" ```. These properties can be accessed directly from the object like ``` user.name, user.email ```
+
+#### Additional Methods
+You can define any additional methods you want in your extended class.
+```js
+// Photo.js
+
+import Model from "./Model";
+
+export default class Photo extends Model {
+
+    /**
+     * Create a new photo model
+     * @param {object} data model data
+     * @param {object} params additional url parameters
+     * @param {string} url request url
+     */
+    constructor(data = null, params = null, url = '/photos') {
+        if (data == null) {
+            data = {
+                title: null
+            };
+        }
+
+        super(data, url, params);
+    }
+
+    /**
+     * Upload photo
+     * @param {FormData} data request payload
+     * @param {string} url request url
+     * @param {string} headers request headers
+     * @param {callback} transformResponseCallback function for transforming the response
+     * @param {callback} transformRequestCallback function for transforming the request
+     * @return Promise
+     */
+    upload(data, url = `photos/${this.id}/upload`, headers = { 'Content-Type': 'multipart/form-data' }, transformResponseCallback = null, transformRequestCallback = null) {
+        return this.submit('post', url, data, headers, transformResponseCallback, transformRequestCallback);
+    }
+}
+```
+Now to initialise and send request, it would look something like the following.
+```js
+let photo = new Photo();
+photo.id = 10;
+photo.upload(formData).then(response => {
+    // do stuff here
+}).catch(error => { /* handle it */});
+```
+For example this method will send a **post** request to ``` http://someapp/photos/10/upload ``` and response might look something like the following.
+```js
+{
+  "id": "10",
+  "user_id": 1,
+  "title": "My First Photo",
+  "mime": "png",
+  "created_at": "2018-07-09 10:02:17",
+  "updated_at": "2018-07-09 10:02:17",
+  "download_link": "http://someapp/photos/10/download/my-first-photo-original.png",
+  "thumbnail_link": "http://someapp/photos/10/my-first-photo-thumbnail.png",
+}
+```
+You can define additional methods to your heart's content.
