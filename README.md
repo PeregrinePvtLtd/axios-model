@@ -72,7 +72,7 @@ The axios-model (**_Model.js_**) provides helper methods for sending **get**, **
 
 You can ```import``` or ```require``` the following **_Model.js_** class to use it in your project. 
 
-Examples are showns as we go forward.
+Examples are shown below.
 ```js
 // Model.js
 
@@ -239,7 +239,7 @@ export default class Model {
 
 ### Send HTTP request
 
-Before starting to send http requests you need initialise a new model object
+Before starting to send http requests you need initialise a new model object.
 ```js
 import Model from './Model';
 
