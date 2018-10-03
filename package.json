@@ -1,6 +1,6 @@
 {
   "name": "axios-model",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "model based ajax calls with axios",
   "main": "dist/index.js",
   "scripts": {
