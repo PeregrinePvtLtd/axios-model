@@ -67,10 +67,22 @@ using cdn:
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 ```
 
-## Features
-The axios-model (**_Model.js_**) provides helper methods for sending **get**, **post**, **patch** and **delete** requests. 
+## Installation
 
-You can ```import``` or ```require``` the following **_Model.js_** class to use it in your project. 
+using npm:
+```
+npm install axios-model
+```
+
+using yarn:
+```
+yarn add axios-model
+```
+
+## Features
+The axios-model (**_Model.js_**) provides helper methods for sending **get**, **post**, **patch** and **delete** requests.
+
+You can ```import``` or ```require``` the following **_Model.js_** class to use it in your project.
 
 Examples are shown below.
 ```js
@@ -252,17 +264,17 @@ let user = new Model({any: 'default', fields: 'you want'}, '/route-to-fetch-user
 user.fetch().then(response => {
     // use the list property to store the response data
     user.list = response.data.data // yeah i know :|
-    // do your thing 
+    // do your thing
 }).catch(error => { /* handle it */ });
 
 //with additional parameters
 user.fetch({sortby: 'id', per_page: 20}, (response) => {
-    // this is an optional callback to transform response (TransformResponseCallback) 
+    // this is an optional callback to transform response (TransformResponseCallback)
     // do your thing
 }, (request) => {
     // this is an optional callback to transform request (TransformRequestCallback)
     // do your thing
-}).then(response => { 
+}).then(response => {
     // do your thing
     user.list = response.data.data
 }).catch(error => { /* handle it */ });
@@ -307,7 +319,7 @@ user.destroy(userId).then(response => {
 }).catch(error => { /* handle it */ });
 ```
 
-Pass the record id ``` userId ```  to destroy method to delete an existing record. 
+Pass the record id ``` userId ```  to destroy method to delete an existing record.
 
 ### Extending and Additional HTTP Methods
 To simplify further you can **extend** the **_Model.js_** class and add any **additional methods** that can be useful for your needs.
