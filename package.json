@@ -1,0 +1,40 @@
+{
+  "name": "axios-model",
+  "version": "1.0.0",
+  "description": "model based ajax calls with axios",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "NODE_ENV=development webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "NODE_ENV=development webpack --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "NODE_ENV=production webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asadhshujau/axios-model.git"
+  },
+  "keywords": [
+    "vue",
+    "axios",
+    "model",
+    "ajax",
+    "http",
+    "post",
+    "update",
+    "patch",
+    "delete"
+  ],
+  "author": "Asadh Shujau",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asadhshujau/axios-model/issues"
+  },
+  "homepage": "https://github.com/asadhshujau/axios-model#readme",
+  "devDependencies": {
+    "laravel-mix": "^2.1.14"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}
