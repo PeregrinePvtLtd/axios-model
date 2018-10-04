@@ -80,13 +80,13 @@ yarn add axios-model
 ```
 
 ## Features
-The axios-model (**_Model.js_**) provides helper methods for sending **get**, **post**, **patch** and **delete** requests.
+The axios-model provides helper methods for sending **get**, **post**, **patch** and **delete** requests.
 
-You can ```import``` or ```require``` the following **_Model.js_** class to use it in your project.
+You can ```import``` or ```require``` to use it in your project.
 
 Examples are shown below.
 ```js
-// Model.js
+// src/Model.js
 
 import axios from 'axios';
 
@@ -253,7 +253,7 @@ export default class Model {
 
 Before starting to send http requests you need initialise a new model object.
 ```js
-import Model from './Model';
+import Model from 'axios-model';
 
 let user = new Model({any: 'default', fields: 'you want'}, '/route-to-fetch-users', {any: 'additional url params'});
 ```
@@ -327,9 +327,8 @@ To simplify further you can **extend** the **_Model.js_** class and add any **ad
 #### Extend
 It is easy.
 ```js
-// User.js
 
-import Model from "./Model";
+import Model from 'axios-model';
 
 export default class User extends Model {
 
@@ -356,19 +355,18 @@ export default class User extends Model {
 
 Now you can initialise a user object which required less arguments.
 ```js
-import User from './User';
+import User from './User'; // from wherever you store this
 
 let user = new User();
 ```
 
-As shown in the **_User.js_** above, some default fields can be set when initialising. This can be useful when using with a frontend library like [Vuejs](https://vuejs.org/). You can use them like ``` v-model="user.name" ```. These properties can be accessed directly from the object like ``` user.name, user.email ```.
+As shown in the **User Class** above, some default fields can be set when initialising. This can be useful when using with a frontend library like [Vuejs](https://vuejs.org/). You can use them like ``` v-model="user.name" ```. These properties can be accessed directly from the object like ``` user.name, user.email ```.
 
 #### Additional Methods
 You can define any additional methods you want in your extended class.
 ```js
-// Photo.js
 
-import Model from "./Model";
+import Model from "axios-model";
 
 export default class Photo extends Model {
 
@@ -408,7 +406,7 @@ Now to initialise and send request, it would look something like the following.
 import Photo from './Photo';
 
 let photo = new Photo();
-photo.id = 10;
+photo.id = 10; // just to show it works
 photo.upload(formData).then(response => {
     // do stuff here
 }).catch(error => { /* handle it */});
