@@ -50,23 +50,6 @@ Something like the following.
 }
 ```
 
-You will need to install [axios](https://github.com/axios/axios) in order to use the **_Model.js_** class. You can install it in the following ways.
-
-using npm:
-```
-npm install axios
-```
-
-using bower:
-```
-bower install axios
-```
-
-using cdn:
-```html
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-```
-
 ## Installation
 
 using npm:
